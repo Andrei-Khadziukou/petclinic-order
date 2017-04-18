@@ -1,8 +1,6 @@
 server:
   port: 8081
 
-spring.application.name: ORDER_SERVICE
-
 eureka:
   instance:
     leaseRenewalInterval: 10
