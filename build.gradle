@@ -7,12 +7,15 @@ buildscript {
     }
     dependencies {
         classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+        classpath 'org.liquibase:liquibase-gradle-plugin:1.2.4'
+        classpath ('org.postgresql:postgresql:42.0.0')
     }
 }
 
 apply plugin: 'java'
 apply plugin: 'idea'
 apply plugin: 'org.springframework.boot'
+apply plugin: 'org.liquibase.gradle'
 
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = 1.8
@@ -31,10 +34,24 @@ dependencies {
     compile('org.liquibase:liquibase-core')
     compile('org.springframework.boot:spring-boot-starter-validation')
     compile('org.springframework.boot:spring-boot-starter-web')
+    compile('org.springframework.boot:spring-boot-starter-data-jpa')
+    compile('org.apache.commons:commons-lang3:3.3.2')
+
     runtime('org.springframework.boot:spring-boot-devtools')
     runtime('org.postgresql:postgresql')
 
     testCompile('org.springframework.boot:spring-boot-starter-test')
+}
+
+liquibase {
+    activities {
+        main {
+            changeLogFile 'src/main/resources/db/changelog/db.changelog.xml'
+            url 'jdbc:postgresql://localhost:5432/order_service'
+            defaultSchemaName 'app'
+            username 'pc_admin'
+        }
+    }
 }
 
 dependencyManagement {

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <changeSet id="1" author="andrei_astaschenko">
+        <createTable tableName="pc_order">
+            <column name="pc_order_id" type="varchar(255)">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="pc_name" type="varchar(255)"/>
+            <column name="pc_email" type="varchar(255)"/>
+            <column name="pc_address" type="varchar(255)"/>
+            <column name="pc_animal_id" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <createTable tableName="service_to_order_map">
+            <column name="pc_order_id" type="varchar(255)">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="pc_service_id" type="varchar(255)">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+        </createTable>
+        <addForeignKeyConstraint baseTableName="service_to_order_map" baseColumnNames="pc_order_id"
+                                 constraintName="fk_service_to_order"
+                                 referencedTableName="pc_order" referencedColumnNames="pc_order_id"/>
+    </changeSet>
+</databaseChangeLog>
