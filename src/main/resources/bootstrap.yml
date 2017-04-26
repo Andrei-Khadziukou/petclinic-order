@@ -17,6 +17,9 @@ eureka:
     lease:
       duration: 50
 
-spring.cloud.config.discovery:
-  enabled: true
-  serviceId: CLOUD_CONFIG_SERVER
+spring.cloud.config:
+  username: test-user
+  password: test-password
+  discovery:
+    enabled: true
+    serviceId: CLOUD_CONFIG_SERVER
