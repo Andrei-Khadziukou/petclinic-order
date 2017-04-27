@@ -26,7 +26,7 @@ public class OrderRepositoryIntegrationTest {
 
     @Test
     public void testFindAll() {
-        List<Order> orders = Lists.newArrayList(initOrder("testAnimalId1"), initOrder("testAnimalId2"), initOrder("testAnimalId3"));
+        List<Order> orders = Lists.newArrayList(initOrder(), initOrder(), initOrder());
         orders.stream().forEach(order -> orderRepository.save(order));
         assertNotNull(orderRepository.findAll());
         assertTrue(ListUtils.isEqualList(orders, orderRepository.findAll()));
@@ -34,21 +34,21 @@ public class OrderRepositoryIntegrationTest {
 
     @Test
     public void testSaveOrder() {
-        Order order = initOrder("animalId");
+        Order order = initOrder();
         orderRepository.save(order);
         Order savedOrder = orderRepository.findOne(order.getId());
         assertNotNull(savedOrder);
         assertEquals(order, savedOrder);
     }
 
-    private Order initOrder(String animalId) {
+    private Order initOrder() {
         Order order = new Order();
-        order.setId(UUID.randomUUID().toString());
+        order.setId(UUID.randomUUID());
         order.setName("name");
         order.setEmail("test@test.com");
         order.setAddress("address");
-        order.setAnimalId(animalId);
-        order.setServiceIds(Lists.newArrayList("serviceId1", "serviceId2"));
+        order.setAnimalId(UUID.randomUUID());
+        order.setServiceIds(Lists.newArrayList(UUID.randomUUID(), UUID.randomUUID()));
         return order;
     }
 }

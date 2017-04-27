@@ -8,13 +8,14 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
+import java.util.UUID;
 
 @Entity
 @Table(name = "pc_order", schema = "app")
 public class Order implements Serializable {
     @Id
     @Column(name = "pc_order_id")
-    private String id;
+    private UUID id;
     @Column(name = "pc_name")
     private String name;
     @Column(name = "pc_email")
@@ -22,23 +23,23 @@ public class Order implements Serializable {
     @Column(name = "pc_address")
     private String address;
     @Column(name = "pc_animal_id")
-    private String animalId;
+    private UUID animalId;
     @ElementCollection
     @CollectionTable(
             name = "service_to_order_map", schema = "app",
             joinColumns = @JoinColumn(name = "pc_order_id")
     )
     @Column(name = "pc_service_id")
-    private List<String> serviceIds;
+    private List<UUID> serviceIds;
 
     public Order() {
     }
 
-    public String getId() {
+    public UUID getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 
@@ -66,19 +67,19 @@ public class Order implements Serializable {
         this.address = address;
     }
 
-    public String getAnimalId() {
+    public UUID getAnimalId() {
         return animalId;
     }
 
-    public void setAnimalId(String animalId) {
+    public void setAnimalId(UUID animalId) {
         this.animalId = animalId;
     }
 
-    public List<String> getServiceIds() {
+    public List<UUID> getServiceIds() {
         return serviceIds;
     }
 
-    public void setServiceIds(List<String> serviceIds) {
+    public void setServiceIds(List<UUID> serviceIds) {
         this.serviceIds = serviceIds;
     }
 

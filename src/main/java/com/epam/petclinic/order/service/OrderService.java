@@ -17,7 +17,7 @@ public class OrderService implements IOrderService {
     @Transactional
     @Override
     public void save(Order order) {
-        order.setId(UUID.randomUUID().toString());
+        order.setId(UUID.randomUUID());
         orderRepository.save(order);
     }
 

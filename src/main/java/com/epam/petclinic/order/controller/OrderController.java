@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Collection;
 import java.util.Collections;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/orders")
@@ -19,7 +20,7 @@ public class OrderController {
     private IOrderService orderService;
 
     @RequestMapping(name = "/", method = RequestMethod.POST)
-    public Collection<String> saveOrder(@RequestBody Order order) {
+    public Collection<UUID> saveOrder(@RequestBody Order order) {
         orderService.save(order);
         // TODO: generating clinic id list
         return Collections.singleton(order.getId());

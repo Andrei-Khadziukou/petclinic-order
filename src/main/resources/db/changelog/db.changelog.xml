@@ -29,4 +29,26 @@
                                  constraintName="fk_service_to_order"
                                  referencedTableName="pc_order" referencedColumnNames="pc_order_id"/>
     </changeSet>
+    <changeSet id="2" author="andrei_astaschenko">
+        <delete tableName="service_to_order_map"/>
+        <delete tableName="pc_order"/>
+        <dropForeignKeyConstraint baseTableName="service_to_order_map" constraintName="fk_service_to_order"/>
+        <modifyDataType tableName="pc_order" columnName="pc_order_id" newDataType="uuid"/>
+        <modifyDataType tableName="pc_order" columnName="pc_animal_id" newDataType="uuid"/>
+        <modifyDataType tableName="service_to_order_map" columnName="pc_order_id" newDataType="uuid"/>
+        <modifyDataType tableName="service_to_order_map" columnName="pc_service_id" newDataType="uuid"/>
+        <addForeignKeyConstraint baseTableName="service_to_order_map" baseColumnNames="pc_order_id"
+                                 constraintName="fk_service_to_order"
+                                 referencedTableName="pc_order" referencedColumnNames="pc_order_id"/>
+        <rollback>
+            <dropForeignKeyConstraint baseTableName="service_to_order_map" constraintName="fk_service_to_order"/>
+            <modifyDataType tableName="pc_order" columnName="pc_order_id" newDataType="varchar(255)"/>
+            <modifyDataType tableName="pc_order" columnName="pc_animal_id" newDataType="varchar(255)"/>
+            <modifyDataType tableName="service_to_order_map" columnName="pc_order_id" newDataType="varchar(255)"/>
+            <modifyDataType tableName="service_to_order_map" columnName="pc_service_id" newDataType="varchar(255)"/>
+            <addForeignKeyConstraint baseTableName="service_to_order_map" baseColumnNames="pc_order_id"
+                                     constraintName="fk_service_to_order"
+                                     referencedTableName="pc_order" referencedColumnNames="pc_order_id"/>
+        </rollback>
+    </changeSet>
 </databaseChangeLog>
