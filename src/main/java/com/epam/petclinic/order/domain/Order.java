@@ -6,6 +6,9 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.List;
 import java.util.UUID;
@@ -17,13 +20,20 @@ public class Order implements Serializable {
     @Column(name = "pc_order_id")
     private UUID id;
     @Column(name = "pc_name")
+    @NotNull
+    @Size(max = 50)
     private String name;
     @Column(name = "pc_email")
+    @NotNull
+    @Pattern(regexp = "^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@"
+            + "[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$")
     private String email;
     @Column(name = "pc_address")
     private String address;
+    @NotNull
     @Column(name = "pc_animal_id")
     private UUID animalId;
+    @NotNull
     @ElementCollection
     @CollectionTable(
             name = "service_to_order_map", schema = "app",
