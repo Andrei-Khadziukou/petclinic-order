@@ -1,4 +1,4 @@
-spring.application.name: ORDER_SERVICE
+spring.application.name: ORDER-SERVICE
 
 ##Specify where is a Configuration Server
 #spring.cloud.config.uri: http://localhost:8084
@@ -11,9 +11,7 @@ eureka:
     leaseExperationDurationinSecond: 20
   client:
     serviceUrl:
-      defaultZone: http://127.0.0.1:8080/eureka/
-    healthcheck:
-      enabled: true
+      defaultZone: http://localhost:8080/eureka/
     lease:
       duration: 50
 
