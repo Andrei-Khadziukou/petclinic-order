@@ -41,6 +41,8 @@ dependencies {
     runtime('org.postgresql:postgresql')
 
     testCompile('org.springframework.boot:spring-boot-starter-test')
+    testCompile('org.springframework.boot:spring-boot-starter-data-jpa')
+    testCompile('com.h2database:h2')
 }
 
 liquibase {
@@ -52,6 +54,10 @@ liquibase {
             username 'pc_admin'
         }
     }
+}
+
+test {
+    systemProperty "spring.profiles.active", "test"
 }
 
 dependencyManagement {
