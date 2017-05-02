@@ -41,10 +41,12 @@ dependencies {
     compile('org.springframework.boot:spring-boot-actuator-docs')
     compile('org.springframework.cloud:spring-cloud-starter-eureka')
     compile('org.springframework.cloud:spring-cloud-starter-config')
+    compile('org.springframework.cloud:spring-cloud-starter-feign')
     compile('org.springframework.boot:spring-boot-starter-validation')
     compile('org.springframework.boot:spring-boot-starter-web')
     compile('org.springframework.boot:spring-boot-starter-data-jpa')
     compile('org.apache.commons:commons-lang3:3.3.2')
+    compile('org.projectlombok:lombok')
 
     runtime('org.springframework.boot:spring-boot-devtools')
     runtime('org.postgresql:postgresql')
@@ -53,6 +55,7 @@ dependencies {
     testCompile('org.springframework.boot:spring-boot-starter-data-jpa')
     testCompile('org.springframework.restdocs:spring-restdocs-mockmvc')
     testCompile('com.h2database:h2')
+    testCompile('org.easymock:easymock:3.1')
 }
 
 liquibase {
