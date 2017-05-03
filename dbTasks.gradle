@@ -1,0 +1,49 @@
+import groovy.sql.Sql
+
+//  --- Create and drop database tasks
+configurations {
+    driver
+}
+
+dependencies {
+    driver group: 'org.postgresql', name: 'postgresql'
+}
+
+URLClassLoader loader = GroovyObject.class.classLoader
+
+configurations.driver.each {File file ->
+    loader.addURL(file.toURL())
+}
+
+task createDatabase() {
+    doLast{
+        String createUserQuery = "create user ${username} with password \'${password}\'"
+        Sql.withInstance(jdbcURL, admin, password, driverName, { Sql sql ->
+            sql.execute(createUserQuery)
+        })
+
+        String createDbQuery = "create database ${databaseName} owner ${username}"
+        Sql.withInstance(jdbcURL, admin, password, driverName, { Sql sql ->
+            sql.execute(createDbQuery)
+        })
+
+        String createSchemaQuery = "create schema if not exists ${schemaName} authorization ${username}"
+        Sql.withInstance("${jdbcURL}${databaseName}", admin, password, driverName, { Sql sql ->
+            sql.execute(createSchemaQuery)
+        })
+    }
+}
+
+task dropDatabase() {
+    doLast{
+        String dropDatabaseQuery = "drop database if exists ${databaseName}"
+        Sql.withInstance(jdbcURL, admin, password, driverName, { Sql sql ->
+            sql.execute(dropDatabaseQuery)
+        })
+
+        String dropUserQuery = "drop user if exists ${username}"
+        Sql.withInstance(jdbcURL, admin, password, driverName, { Sql sql ->
+            sql.execute(dropUserQuery)
+        })
+    }
+}
