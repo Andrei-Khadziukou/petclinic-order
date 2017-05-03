@@ -10,5 +10,9 @@ You need to execute next SQL queries to init PostgreSQL DB:
 
 After that, You can run application to add change set into db.
 
+## Rest documentation
+[Rest documentation](http://docs.spring.io/spring-restdocs/docs/1.2.0.RELEASE/reference/html5/) will be generated after building application
+('gradlew build') in '../petclinic-order/build/asciidoc/html5' directory.
+
 ## Configuration
 * Add `management.security.enabled: false` property into `application.yml` file if you need to connect to secured endpoints from actuator (don't commit that configuration)
