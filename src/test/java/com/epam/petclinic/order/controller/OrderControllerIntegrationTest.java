@@ -1,9 +1,12 @@
 package com.epam.petclinic.order.controller;
 
+import com.epam.petclinic.order.api.ClinicApi;
 import com.epam.petclinic.order.domain.Order;
 import com.epam.petclinic.order.repository.IOrderRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.collect.Lists;
+import org.apache.commons.collections.CollectionUtils;
+import org.easymock.EasyMock;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -28,8 +31,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import static org.easymock.EasyMock.*;
+import static org.junit.Assert.*;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.documentationConfiguration;
 import static org.springframework.restdocs.payload.PayloadDocumentation.*;
 import static org.springframework.restdocs.snippet.Attributes.key;
@@ -52,6 +55,9 @@ public class OrderControllerIntegrationTest {
     @Autowired
     private ObjectMapper objectMapper;
 
+    @Autowired
+    private OrderController orderController;
+    private ClinicApi clinicApi;
     private MockMvc mockMvc;
 
     @Rule
@@ -63,6 +69,8 @@ public class OrderControllerIntegrationTest {
         this.mockMvc = MockMvcBuilders.webAppContextSetup(this.context)
                 .apply(documentationConfiguration(restDocumentation))
                 .build();
+        this.clinicApi = EasyMock.createMock(ClinicApi.class);
+        this.orderController.setClinicApi(clinicApi);
     }
 
     @Test
@@ -97,6 +105,10 @@ public class OrderControllerIntegrationTest {
                 fields.withPath("animalId").description("The order's animal ID"),
                 fields.withPath("serviceIds").description("The service ID list for order"))
         );
+        expect(clinicApi.getClinicIdByAnimalIdAndServiceIds(order.getAnimalId(), order.getServiceIds()))
+                .andReturn(Collections.EMPTY_LIST).once();
+        replay(clinicApi);
+        assertTrue(CollectionUtils.isEmpty(orderRepository.findAll()));
         mockMvc.perform(post("/orders")
                 .accept(MediaType.APPLICATION_JSON)
                 .contentType(MediaType.APPLICATION_JSON)
@@ -108,6 +120,7 @@ public class OrderControllerIntegrationTest {
         assertEquals(1, savedOrders.size());
         savedOrders.get(0).setId(null);
         assertEquals(order, savedOrders.get(0));
+        verify(clinicApi);
     }
 
     private Order initOrder() {
