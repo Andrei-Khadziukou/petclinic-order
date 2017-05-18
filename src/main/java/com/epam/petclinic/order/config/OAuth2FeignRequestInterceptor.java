@@ -4,10 +4,12 @@ import feign.RequestInterceptor;
 import feign.RequestTemplate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.oauth2.client.OAuth2ClientContext;
 import org.springframework.util.Assert;
 
+@Configuration
 public class OAuth2FeignRequestInterceptor implements RequestInterceptor {
 
     /**
