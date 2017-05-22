@@ -20,4 +20,4 @@ spring.cloud.config:
   password: test-password
   discovery:
     enabled: true
-    serviceId: CLOUD_CONFIG_SERVER
+    serviceId: CONFIG-SERVER
