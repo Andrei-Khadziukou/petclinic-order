@@ -1,2 +1,2 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-com.epam.petclinic.order.config.OAuth2FeignAutoConfiguration
+com.epam.petclinic.order.config.OAuth2FeignRequestInterceptor
