@@ -1,7 +1,27 @@
-spring.application.name: ORDER-SERVICE
-
-##Specify where is a Configuration Server
-#spring.cloud.config.uri: http://localhost:8084
+---
+spring:
+  # Name of application
+  application.name: ORDER-SERVICE
+  # Properties described below are applied for dev and default profiles
+  profiles: default, dev
+  # Spring cloud block
+  cloud.config:
+    # Credential for spring cloud config
+    username: test-user
+    password: test-password
+    discovery:
+      enabled: true
+      serviceId: CONFIG-SERVER
+    # Mechanism of retry enabled
+    failFast: true
+    retry:
+      # Initial interval in milliseconds
+      initialInterval: 20000
+      multiplier: 1.3
+      # Maximum interval in milliseconds
+      maxInterval: 170000
+      # Number of attempts retry
+      maxAttempts: 10
 
 # Discovery for the Config Server
 # see details: http://cloud.spring.io/spring-cloud-static/spring-cloud-config/1.3.0.RELEASE/#discovery-first-bootstrap
@@ -14,10 +34,3 @@ eureka:
       defaultZone: http://localhost:8080/eureka/
     lease:
       duration: 50
-
-spring.cloud.config:
-  username: test-user
-  password: test-password
-  discovery:
-    enabled: true
-    serviceId: CONFIG-SERVER
