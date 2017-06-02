@@ -50,6 +50,7 @@ dependencies {
     compile('org.springframework.cloud:spring-cloud-starter-oauth2')
     compile('org.springframework.security:spring-security-jwt')
 
+    //The next two dependencies need for retry mechanism.
     runtime('org.springframework.retry:spring-retry')
     runtime('org.springframework.boot:spring-boot-starter-aop')
     runtime('org.springframework.boot:spring-boot-devtools')
